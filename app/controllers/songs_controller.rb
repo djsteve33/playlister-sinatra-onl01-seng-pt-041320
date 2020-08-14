@@ -24,16 +24,18 @@ class SongsController < Sinatra::Base
   end
 
   post '/songs' do
-    @song = Song.create(:name => params[:song][:name])
+    @song = Song.create(:name => params[:song])
 
-    artist_entry = params[:song][:artist]
-    if Artist.find_by(:name => artist_entry)
-      artist = Artist.find_by(:name => artist_entry)
-    else
-      artist = Artist.create(:name => artist_entry)
-    end
-    @song.artist = artist
+    # artist_entry = params[:song][:artist]
+    # binding.pry
+    # if Artist.find_by(:name => artist_entry)
+    #   artist = Artist.find_by(:name => artist_entry)
+    # else
+    #   artist = Artist.create(:name => artist_entry)
+    # end
+    # @song.artist = artist
 
+    @song.artist = Artist.find_or_create_by(name: params[artist][:name])
     genre_selections = params[:song][:genres]
     genre_selections.each do |genre|
       @song.genres << Genre.find(genre)
