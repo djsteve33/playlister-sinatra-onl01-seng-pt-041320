@@ -3,6 +3,9 @@ require './config/environment'
 begin
   fi_check_migration
 
+  use ArtistsController
+  use GenresController
+  use SongsController
   use Rack::MethodOverride
   run ApplicationController
 rescue ActiveRecord::PendingMigrationError => err
