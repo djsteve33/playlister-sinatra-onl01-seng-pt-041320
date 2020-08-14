@@ -24,7 +24,7 @@ class SongsController < Sinatra::Base
   end
 
   post '/songs' do
-    # @song = Song.create(:name => params[:song]) !!activate
+    @song = Song.create(params[:song]) 
 
     # artist_entry = params[:song][:artist]
     # binding.pry
@@ -35,19 +35,18 @@ class SongsController < Sinatra::Base
     # end
     # @song.artist = artist
 
-    # @song.artist = Artist.find_or_create_by(name: params[artist][:name]) Activate!!
+    @song.artist = Artist.find_or_create_by(name: params[:artist][:name]) 
+
     # genre_selections = params[:song][:genres]
     # genre_selections.each do |genre|
-    #   @song.genres << Genre.find(genre)
-    # end
-
-    # @song.save Activate!!
+    @song.genre_ids = params[:genres]
+    @song.save
 
     
-      @song = Song.create(:name => params["Name"])
-      @song.artist = Artist.find_or_create_by(:name => params["Artist Name"])
-      @song.genre_ids = params[:genres]
-      @song.save
+      # @song = Song.create(:name => params["Name"])
+      # @song.artist = Artist.find_or_create_by(:name => params["Artist Name"])
+      # @song.genre_ids = params[:genres]
+      # @song.save
 
     flash[:message] = "Successfully created song."
     redirect to "songs/show"
